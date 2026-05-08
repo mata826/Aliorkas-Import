@@ -1,0 +1,146 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aliorka's Boutique | Elegancia y Brillo</title>
+
+    <!-- Fuentes: Cinzel (Lujo Clásico) e Inter (Tech-Sleek) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="header-content">
+            <div class="brand">
+                <img src="{% static 'aliorkalogo.jpeg' %}" alt="Aliorka Logo">
+                <span>Aliorka's</span>
+            </div>
+            
+            <nav class="desktop-nav">
+                <div class="nav-item has-dropdown">
+                    <button class="nav-btn">Categorías <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+                    <!-- Mega Menu Dropdown (Vercel Style) -->
+                    <div class="mega-menu">
+                        <div class="mega-menu-grid">
+                            <a href="#grid-productos" class="mega-item">
+                                <div class="mega-icon">💎</div>
+                                <div class="mega-text">
+                                    <h4>Collares y Cadenas</h4>
+                                    <p>Gargantillas exclusivas con estilo.</p>
+                                </div>
+                            </a>
+                            <a href="#grid-productos" class="mega-item">
+                                <div class="mega-icon">✨</div>
+                                <div class="mega-text">
+                                    <h4>Pulseras Chunky</h4>
+                                    <p>Diseños atrevidos y modernos.</p>
+                                </div>
+                            </a>
+                            <a href="#grid-productos" class="mega-item">
+                                <div class="mega-icon">💍</div>
+                                <div class="mega-text">
+                                    <h4>Anillos de Lujo</h4>
+                                    <p>Detalles para momentos únicos.</p>
+                                </div>
+                            </a>
+                            <a href="#grid-productos" class="mega-item">
+                                <div class="mega-icon">👑</div>
+                                <div class="mega-text">
+                                    <h4>Colección Élite</h4>
+                                    <p>Ediciones limitadas de Aliorka's.</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <a href="https://www.instagram.com/aliorkasaccesorios/?hl=es" target="_blank" class="nav-link">Instagram</a>
+                <a href="https://wa.me/584148384691" target="_blank" class="nav-link">Contacto</a>
+            </nav>
+
+            <div class="header-actions">
+                <button class="carrito-btn" onclick="toggleCarrito()">
+                    Bolsa <span class="badge" id="cart-count">0</span>
+                </button>
+                <button class="menu-btn mobile-only" onclick="toggleNav()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <span class="badge-hero">Nueva Colección 2026</span>
+            <h1>Elegancia Atemporal</h1>
+            <p>Descubre joyería artesanal que combina el brillo eterno del oro con un diseño vanguardista y exclusivo.</p>
+            <a href="#grid-productos" class="cta-btn">Explorar Catálogo</a>
+        </div>
+    </section>
+
+    <main class="contenedor-tienda" id="grid-productos">
+        {% for p in productos %}
+        <div class="card">
+            <div class="img-box">
+                {% if p.imagen %}
+                <img src="{{ p.imagen.url }}" alt="{{ p.nombre }}">
+                {% elif p.imagen_url %}
+                <img src="{% static p.imagen_url %}" alt="{{ p.nombre }}">
+                {% else %}
+                <img src="{% static 'aliorkalogo.jpeg' %}" alt="{{ p.nombre }}">
+                {% endif %}
+            </div>
+            <div class="info">
+                <h3>{{ p.nombre }}</h3>
+                <span class="precio">${{ p.precio }}</span>
+                <button class="add-btn" onclick="addToCart('{{ p.id }}', '{{ p.nombre|escapejs }}', '{{ p.precio }}')">
+                    Agregar a la Bolsa
+                </button>
+            </div>
+        </div>
+        {% empty %}
+        <p style="text-align:center; grid-column: 1/-1; color: var(--text-sec);">No hay productos disponibles por ahora.</p>
+        {% endfor %}
+    </main>
+
+    <!-- Mobile Nav Menu -->
+    <div id="nav-menu" class="mobile-nav">
+        <div class="side-header">
+            <h2 style="font-family: 'Cinzel';">Menú</h2>
+            <button onclick="toggleNav()" class="close-btn">&times;</button>
+        </div>
+        <div class="nav-links">
+            <a href="#" onclick="toggleNav()">Inicio</a>
+            <a href="#grid-productos" onclick="toggleNav()">Catálogo</a>
+            <a href="https://www.instagram.com/aliorkasaccesorios/?hl=es" target="_blank">Instagram (@aliorkasaccesorios)</a>
+            <a href="https://wa.me/584148384691" target="_blank">WhatsApp Contacto</a>
+        </div>
+    </div>
+
+    <!-- Sidebar Carrito -->
+    <div id="sidebar">
+        <div class="side-header">
+            <h2 style="font-family: 'Cinzel';">Tu Selección</h2>
+            <button onclick="toggleCarrito()" class="close-btn">&times;</button>
+        </div>
+        <div id="lista-carrito"></div>
+        <div class="total-box">
+            <h3>Total: <span id="total-precio">$0.00</span></h3>
+            <button class="checkout-btn" onclick="processWhatsAppOrder()">PROCESAR COMPRA</button>
+        </div>
+    </div>
+
+    <div id="notificacion">Añadido a tu bolsa con éxito.</div>
+
+    <footer>
+        <div class="footer-content">
+            <img src="{% static 'aliorkalogo.jpeg' %}" alt="Aliorka Logo" class="footer-logo">
+            <p>&copy; 2026 Aliorka's Boutique. Lujo y exclusividad garantizada.</p>
+        </div>
+    </footer>
+
+    <script src="{% static 'script.js' %}"></script>
+</body>
+</html>
