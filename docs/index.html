@@ -1,21 +1,21 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aliorka's Boutique | Elegancia y Brillo</title>
+    <meta name="description" content="Descubre joyería artesanal exclusiva en Aliorka's Boutique. Collares, pulseras y accesorios de lujo con entrega por WhatsApp.">
 
     <!-- Fuentes: Cinzel (Lujo Clásico) e Inter (Tech-Sleek) -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header class="main-header">
         <div class="header-content">
             <div class="brand">
-                <img src="{% static 'aliorkalogo.jpeg' %}" alt="Aliorka Logo">
+                <img src="aliorkalogo.jpeg" alt="Aliorka Logo">
                 <span>Aliorka's</span>
             </div>
             
@@ -81,28 +81,85 @@
     </section>
 
     <main class="contenedor-tienda" id="grid-productos">
-        {% for p in productos %}
+
         <div class="card">
             <div class="img-box">
-                {% if p.imagen %}
-                <img src="{{ p.imagen.url }}" alt="{{ p.nombre }}">
-                {% elif p.imagen_url %}
-                <img src="{% static p.imagen_url %}" alt="{{ p.nombre }}">
-                {% else %}
-                <img src="{% static 'aliorkalogo.jpeg' %}" alt="{{ p.nombre }}">
-                {% endif %}
+                <img src="cadenacorazon.jpeg" alt="Cadena Corazón">
             </div>
             <div class="info">
-                <h3>{{ p.nombre }}</h3>
-                <span class="precio">${{ p.precio }}</span>
-                <button class="add-btn" onclick="addToCart('{{ p.id }}', '{{ p.nombre|escapejs }}', '{{ p.precio }}')">
+                <h3>Cadena Corazón</h3>
+                <span class="precio">$25.00</span>
+                <button class="add-btn" onclick="addToCart('1', 'Cadena Corazón', '25.00')">
                     Agregar a la Bolsa
                 </button>
             </div>
         </div>
-        {% empty %}
-        <p style="text-align:center; grid-column: 1/-1; color: var(--text-sec);">No hay productos disponibles por ahora.</p>
-        {% endfor %}
+
+        <div class="card">
+            <div class="img-box">
+                <img src="cadenachunkycorazon.jpeg" alt="Cadena Chunky Corazón">
+            </div>
+            <div class="info">
+                <h3>Cadena Chunky Corazón</h3>
+                <span class="precio">$30.00</span>
+                <button class="add-btn" onclick="addToCart('2', 'Cadena Chunky Corazón', '30.00')">
+                    Agregar a la Bolsa
+                </button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="img-box">
+                <img src="cadenasolmariposa.jpeg" alt="Cadena Sol Mariposa">
+            </div>
+            <div class="info">
+                <h3>Cadena Sol Mariposa</h3>
+                <span class="precio">$28.00</span>
+                <button class="add-btn" onclick="addToCart('3', 'Cadena Sol Mariposa', '28.00')">
+                    Agregar a la Bolsa
+                </button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="img-box">
+                <img src="modelocadenacorazon.jpeg" alt="Modelo Cadena Corazón">
+            </div>
+            <div class="info">
+                <h3>Modelo Cadena Corazón</h3>
+                <span class="precio">$32.00</span>
+                <button class="add-btn" onclick="addToCart('4', 'Modelo Cadena Corazón', '32.00')">
+                    Agregar a la Bolsa
+                </button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="img-box">
+                <img src="pulseracorazonchunky.jpeg" alt="Pulsera Corazón Chunky">
+            </div>
+            <div class="info">
+                <h3>Pulsera Corazón Chunky</h3>
+                <span class="precio">$22.00</span>
+                <button class="add-btn" onclick="addToCart('5', 'Pulsera Corazón Chunky', '22.00')">
+                    Agregar a la Bolsa
+                </button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="img-box">
+                <img src="variaspulseras.jpeg" alt="Set de Pulseras">
+            </div>
+            <div class="info">
+                <h3>Set de Pulseras</h3>
+                <span class="precio">$35.00</span>
+                <button class="add-btn" onclick="addToCart('6', 'Set de Pulseras', '35.00')">
+                    Agregar a la Bolsa
+                </button>
+            </div>
+        </div>
+
     </main>
 
     <!-- Mobile Nav Menu -->
@@ -136,11 +193,11 @@
 
     <footer>
         <div class="footer-content">
-            <img src="{% static 'aliorkalogo.jpeg' %}" alt="Aliorka Logo" class="footer-logo">
+            <img src="aliorkalogo.jpeg" alt="Aliorka Logo" class="footer-logo">
             <p>&copy; 2026 Aliorka's Boutique. Lujo y exclusividad garantizada.</p>
         </div>
     </footer>
 
-    <script src="{% static 'script.js' %}"></script>
+    <script src="script.js"></script>
 </body>
 </html>
